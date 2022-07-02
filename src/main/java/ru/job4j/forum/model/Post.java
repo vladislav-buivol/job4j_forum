@@ -1,7 +1,6 @@
 package ru.job4j.forum.model;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -11,7 +10,7 @@ public class Post {
     private String name;
     private String desc;
     private Set<Comment> comments = new HashSet<>();
-    private final Calendar created = getCurrentDateTime();
+    private final LocalDateTime created = LocalDateTime.now().withNano(0);
 
     public static Post of(String name) {
         Post post = new Post();
@@ -21,16 +20,6 @@ public class Post {
 
     public Post() {
         this.id = 0;
-    }
-
-    private Calendar getCurrentDateTime() {
-        Calendar calendar = Calendar.getInstance();
-        LocalDateTime localDateTime = LocalDateTime.now();
-        calendar.clear();
-        calendar.set(localDateTime.getYear(), localDateTime.getMonthValue() - 1,
-                localDateTime.getDayOfMonth(),
-                localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
-        return calendar;
     }
 
     public int getId() {
@@ -59,7 +48,7 @@ public class Post {
         return this;
     }
 
-    public Calendar getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 

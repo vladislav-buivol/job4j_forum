@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Comment {
     private String author;
-    private String text = "";
+    private String text;
     private final LocalDateTime date = LocalDateTime.now().withNano(0);
 
     public Comment() {
@@ -17,7 +17,7 @@ public class Comment {
 
     public Comment(String author, String text) {
         this.author = author;
-        this.text = Objects.requireNonNullElse(text, "");
+        this.text = text;
     }
 
     public Comment(String text) {

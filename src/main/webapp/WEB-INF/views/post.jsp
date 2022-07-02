@@ -46,7 +46,7 @@
                     <form method="post" action="/comment">
                         <div class="row">
                             <label for="comment">Добавить комментарии</label>
-                            <textarea name="comment" id="comment"></textarea>
+                            <textarea name="comment" id="comment" required></textarea>
                         </div>
                         <input type="hidden" name="id" value="${post.id}"/>
                         <td colspan='2'><input name="submit" type="submit" value="Сохранить"/></td>
