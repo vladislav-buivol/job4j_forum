@@ -45,11 +45,11 @@
                     </table>
                     <form method="post" action="/comment">
                         <div class="row">
-                            <label for="comment">Добавить комментарии</label>
-                            <textarea name="comment" id="comment" required></textarea>
+                            <label for="text">Добавить комментарии</label>
+                            <textarea name="text" id="text" required></textarea>
                         </div>
                         <input type="hidden" name="id" value="${post.id}"/>
-                        <td colspan='2'><input name="submit" type="submit" value="Сохранить"/></td>
+                        <td colspan='2'><input name="submit" type="submit" id="post" value="Сохранить"/></td>
                     </form>
                 </div>
             </div>

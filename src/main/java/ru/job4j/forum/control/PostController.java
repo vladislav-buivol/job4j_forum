@@ -48,12 +48,11 @@ public class PostController {
 
     @PostMapping("/comment")
     public String addComment(@ModelAttribute Comment comment, HttpServletRequest req) {
-        int id = Integer.parseInt(req.getParameter("id"));
+        int postId = Integer.parseInt(req.getParameter("id"));
         if (comment.getText().length() != 0) {
             comment.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
-            postService.findById(id).addComment(comment);
+            postService.saveComment(postId, comment);
         }
-        return "redirect:/post?id=" + id;
+        return "redirect:/post?id=" + postId;
     }
-
 }

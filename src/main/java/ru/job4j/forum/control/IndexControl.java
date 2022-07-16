@@ -17,7 +17,7 @@ public class IndexControl {
     @GetMapping({"/", "/index"})
     public String index(Model model) {
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        model.addAttribute("posts", posts.getAll());
+        model.addAttribute("posts", posts.getAllByOrderByCreated());
         return "index";
     }
 }

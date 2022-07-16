@@ -1,26 +1,30 @@
 package ru.job4j.forum.model;
 
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "coments")
 public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "posts",
+            referencedColumnName = "id")
+    private Post post;
     private String author;
     private String text;
     private final LocalDateTime date = LocalDateTime.now().withNano(0);
 
     public Comment() {
-        this.author = SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     public Comment(String author, String text) {
         this.author = author;
-        this.text = text;
-    }
-
-    public Comment(String text) {
         this.text = text;
     }
 
@@ -42,6 +46,22 @@ public class Comment {
 
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     @Override

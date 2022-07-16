@@ -1,15 +1,27 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String desc;
-    private Set<Comment> comments = new HashSet<>();
+    private String description;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "post",
+            orphanRemoval = true
+    )
+    private List<Comment> comments = new ArrayList<>();
     private final LocalDateTime created = LocalDateTime.now().withNano(0);
 
     public static Post of(String name) {
@@ -39,12 +51,8 @@ public class Post {
         return this;
     }
 
-    public String getDescription() {
-        return desc;
-    }
-
     public Post setDescription(String description) {
-        this.desc = description;
+        this.description = description;
         return this;
     }
 
@@ -52,24 +60,21 @@ public class Post {
         return created;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public Set<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
     public Post addComment(Comment comment) {
         comments.add(comment);
+        comment.setPost(this);
         return this;
     }
 
@@ -84,12 +89,12 @@ public class Post {
         Post post = (Post) o;
         return id == post.id &&
                 Objects.equals(name, post.name) &&
-                Objects.equals(desc, post.desc) &&
+                Objects.equals(description, post.description) &&
                 Objects.equals(created, post.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, created);
+        return Objects.hash(id, name, description, created);
     }
 }
