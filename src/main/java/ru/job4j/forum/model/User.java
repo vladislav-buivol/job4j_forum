@@ -1,11 +1,25 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String username;
+
     private String password;
+
+    private String username;
+
+    @ManyToOne
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
+
+    private boolean enabled;
 
     public int getId() {
         return id;
@@ -13,6 +27,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUsername() {
@@ -23,12 +45,20 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public Authority getAuthority() {
+        return authority;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
@@ -41,12 +71,14 @@ public class User {
         }
         User user = (User) o;
         return id == user.id &&
+                enabled == user.enabled &&
+                Objects.equals(password, user.password) &&
                 Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password);
+                Objects.equals(authority, user.authority);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password);
+        return Objects.hash(id, password, username, authority, enabled);
     }
 }

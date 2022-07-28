@@ -17,7 +17,7 @@ public class RegController {
 
     @PostMapping("/reg")
     public String regSave(@ModelAttribute User user) {
-        userService.add(user);
+        userService.save(user, "ROLE_USER");
         return "redirect:login";
     }
 

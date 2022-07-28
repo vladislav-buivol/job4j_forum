@@ -16,21 +16,21 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginControl {
     @GetMapping("/login")
-    public String login(@RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "logout", required = false) String logout,
-                        Model model) {
-        String errorMsg = null;
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "logout", required = false) String logout,
+                            Model model) {
+        String errorMessge = null;
         if (error != null) {
-            errorMsg = "Username or Password is incorrect !!";
+            errorMessge = "Username or Password is incorrect !!";
         }
         if (logout != null) {
-            errorMsg = "You have been successfully logged out !!";
+            errorMessge = "You have been successfully logged out !!";
         }
-        model.addAttribute("errorMessage", errorMsg);
+        model.addAttribute("errorMessge", errorMessge);
         return "login";
     }
 
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
