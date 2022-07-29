@@ -14,6 +14,11 @@
 
 </head>
 <body>
+<c:if test="${not empty errorMessge}">
+    <div style="color:red; font-weight: bold; margin: 30px 0px;">
+            ${errorMessge}
+    </div>
+</c:if>
 <div class="container pt-4">
     <div class="row">
         <div class="card">

@@ -19,11 +19,15 @@ public class UserService {
         this.encoder = encoder;
     }
 
-    public void save(User user, String role) {
-        user.setEnabled(true);
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setAuthority(authorityRepo.findByAuthority(role));
-        userRepo.save(user);
+    public boolean save(User user, String role) {
+        if (userRepo.findByUsername(user.getUsername()) == null) {
+            user.setEnabled(true);
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setAuthority(authorityRepo.findByAuthority(role));
+            userRepo.save(user);
+            return true;
+        }
+        return false;
     }
 
     public void delete(User user) {
