@@ -32,16 +32,18 @@ public class Comment {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public Comment setAuthor(String author) {
         this.author = author;
+        return this;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public Comment setText(String text) {
         this.text = text;
+        return this;
     }
 
     public LocalDateTime getDate() {
